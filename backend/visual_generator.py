@@ -72,7 +72,7 @@ def generate_concept_visual(title: str, explanation_text: str, subject: str = "s
         
     y_pos = 0.58
     ax.text(
-        0.04, y_pos, "💡 Key Concepts to Remember:",
+        0.04, y_pos, "Core Concepts to Remember:",
         transform=ax.transAxes,
         color='#ffd700',  # Yellow accent
         fontsize=12,
@@ -176,16 +176,24 @@ def generate_concept_visual(title: str, explanation_text: str, subject: str = "s
             ax.text(0.72, y_f + 0.05, step, transform=ax.transAxes, color='#ffffff', fontsize=9.5, fontweight='bold', ha='center', va='center')
             
         # Down arrows
-        ax.text(0.72, 0.53, "▼", transform=ax.transAxes, color='#10b981', fontsize=11, ha='center')
-        ax.text(0.72, 0.35, "▼", transform=ax.transAxes, color='#10b981', fontsize=11, ha='center')
+        ax.annotate("", xy=(0.72, 0.52), xytext=(0.72, 0.57),
+                    arrowprops=dict(arrowstyle="->", color="#10b981", lw=2),
+                    transform=ax.transAxes)
+        ax.annotate("", xy=(0.72, 0.34), xytext=(0.72, 0.39),
+                    arrowprops=dict(arrowstyle="->", color="#10b981", lw=2),
+                    transform=ax.transAxes)
 
     # 4. Mathematics Real Number Line
     elif "number" in title_lower or "real" in title_lower or "arith" in title_lower or "coordinate" in title_lower:
         # Draw number line
         ax.plot([0.55, 0.91], [0.45, 0.45], color='#ff9933', linewidth=2.5, transform=ax.transAxes)
         # Arrow heads
-        ax.text(0.53, 0.45, "◀", transform=ax.transAxes, color='#ff9933', fontsize=10, ha='center', va='center')
-        ax.text(0.93, 0.45, "▶", transform=ax.transAxes, color='#ff9933', fontsize=10, ha='center', va='center')
+        ax.annotate("", xy=(0.52, 0.45), xytext=(0.55, 0.45),
+                    arrowprops=dict(arrowstyle="->", color="#ff9933", lw=2),
+                    transform=ax.transAxes)
+        ax.annotate("", xy=(0.94, 0.45), xytext=(0.91, 0.45),
+                    arrowprops=dict(arrowstyle="->", color="#ff9933", lw=2),
+                    transform=ax.transAxes)
         
         # Tic marks and numbers
         tics = [0.59, 0.67, 0.75, 0.83, 0.91]

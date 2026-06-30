@@ -155,69 +155,103 @@ SYLLABUS_MAP = {
 }
 
 st.set_page_config(
-
     page_title="GuruAI - Smart Board Assistant",
-    page_icon="🎓",
+    page_icon="https://img.icons8.com/isometric/512/teacher.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # Custom CSS for modern Smart Board aesthetics
 st.markdown("""
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+    
     .main {
-        background-color: #0f172a;
+        background-color: #0b0f19;
         color: #f8fafc;
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     }
     .stAppHeader {
         background-color: transparent;
     }
-    .css-1d3av2a {
-        background-color: #1e293b;
+    /* Custom Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #0f172a !important;
+        border-right: 1px solid rgba(148, 163, 184, 0.1);
     }
     .smart-card {
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 2px solid #38bdf8;
+        border: 1px solid rgba(56, 189, 248, 0.2);
         border-radius: 16px;
         padding: 24px;
         box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.1);
         margin-bottom: 20px;
     }
     .quiz-card {
-        background: #1e1b4b;
-        border: 2px solid #818cf8;
+        background: linear-gradient(135deg, #1e1b4b 0%, #110e24 100%);
+        border: 1px solid rgba(129, 140, 248, 0.3);
         border-radius: 16px;
         padding: 20px;
         margin-top: 15px;
+        box-shadow: 0 10px 25px -5px rgba(129, 140, 248, 0.15);
     }
-    h1, h2, h3 {
-        color: #38bdf8 !important;
-        font-family: 'Inter', sans-serif;
+    h1, h2, h3, h4 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700 !important;
+        letter-spacing: -0.02em;
+    }
+    .status-badge {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .status-badge code {
+        background: rgba(15, 23, 42, 0.6);
+        color: #38bdf8;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 0.75rem;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # App Header
-st.title("🎓 GuruAI: Voice Teaching Assistant")
-st.caption("Haryana Government Smart Board System • NCERT Class 10 Science & Mathematics")
+st.markdown("<h1 style='display:flex;align-items:center;gap:12px;color:#38bdf8;margin-bottom:0;'><i class='fa-solid fa-graduation-cap'></i> GuruAI: Voice Teaching Assistant</h1>", unsafe_allow_html=True)
+st.caption("Haryana Government Smart Board System • Class 10 Science & Mathematics")
 
 # Sidebar Controls
 with st.sidebar:
     st.image("https://img.icons8.com/isometric/512/teacher.png", width=120)
-    st.header("⚙️ Classroom Settings")
+    st.markdown("<h2 style='display:flex;align-items:center;gap:10px;color:#38bdf8;font-size:1.4rem;margin-top:10px;margin-bottom:20px;'><i class='fa-solid fa-sliders'></i> Settings</h2>", unsafe_allow_html=True)
     
-    class_option = st.selectbox("📚 Select Class", ["10"], index=0, help="Currently Class 10 NCERT curriculum is active.")
-    subject_option = st.selectbox("🔬 Select Subject", ["Science", "Mathematics"], index=0)
-    mode_option = st.radio("🎯 Assistant Mode", ["Explanation", "Interactive Quiz"], index=0)
+    class_option = st.selectbox("Select Class", ["10"], index=0, help="Currently Class 10 NCERT curriculum is active.")
+    subject_option = st.selectbox("Select Subject", ["Science", "Mathematics"], index=0)
+    mode_option = st.radio("Assistant Mode", ["Explanation", "Interactive Quiz"], index=0)
     
     st.divider()
-    st.markdown(f"**System Status:** 🟢 Backend Online (`{BACKEND_URL}`)")
+    st.markdown(f"""
+    <div class="status-badge">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Backend: <code>{BACKEND_URL}</code></span>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Main Content Layout
 col1, col2 = st.columns([1, 1], gap="large")
 
 with col1:
-    st.subheader("🎙️ Ask GuruAI (Live Microphone)")
+    st.markdown("<h3 style='display:flex;align-items:center;gap:10px;color:#38bdf8;margin-bottom:15px;'><i class='fa-solid fa-microphone'></i> Ask GuruAI</h3>", unsafe_allow_html=True)
     
     # Live recording widget
     voice_query_file = st.audio_input("Record your question (e.g. 'What is respiration?' or 'Explain real numbers')")
@@ -228,11 +262,11 @@ with col1:
     # Determine the audio input source
     active_audio = voice_query_file if voice_query_file is not None else audio_file
     
-    if st.button("🚀 Ask Virtual Teacher", type="primary", use_container_width=True):
+    if st.button("Ask Virtual Teacher", type="primary", use_container_width=True):
         if active_audio is None:
-            st.warning("⚠️ Kripya record karein ya check karein ki microphone enabled hai!")
+            st.warning("Please record your question or verify that your microphone is enabled.")
         else:
-            with st.spinner("⏳ Transcribing audio and searching NCERT vector store..."):
+            with st.spinner("Transcribing audio and searching NCERT vector store..."):
                 try:
                     # Package the audio file
                     file_name = active_audio.name if hasattr(active_audio, 'name') else "query.wav"
@@ -249,36 +283,41 @@ with col1:
                     if response.status_code == 200:
                         res_json = response.json()
                         st.session_state["result"] = res_json
-                        st.success("✅ Complete!")
+                        st.success("Complete!")
                     else:
-                        st.error(f"❌ Server Error: {response.status_code} - {response.text}")
+                        st.error(f"Server Error: {response.status_code} - {response.text}")
                 except Exception as e:
-                    st.error(f"❌ Backend connection failed: {e}")
+                    st.error(f"Backend connection failed: {e}")
 
     # Display Transcribed Query if available
     if "result" in st.session_state:
         res = st.session_state["result"]
-        st.info(f"🗣️ **GuruAI Transcribed:** '{res.get('user_query', '')}'")
+        st.markdown(f"""
+        <div style="background:rgba(56, 189, 248, 0.08);color:#38bdf8;padding:14px;border-radius:12px;border:1px solid rgba(56, 189, 248, 0.15);margin-bottom:15px;display:flex;align-items:center;gap:10px;">
+            <i class="fa-solid fa-comment-dots" style="font-size:1.1rem;"></i>
+            <span><b>GuruAI Transcribed:</b> '{res.get('user_query', '')}'</span>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.divider()
-    st.subheader("📖 Browse & Learn Chapters")
+    st.markdown("<h3 style='display:flex;align-items:center;gap:10px;color:#38bdf8;'><i class='fa-solid fa-book-open'></i> Browse & Learn Chapters</h3>", unsafe_allow_html=True)
     
     # Get active subject syllabus
     subject_map = SYLLABUS_MAP.get(subject_option, {})
     chapters = list(subject_map.keys())
     
-    selected_chapter = st.selectbox("📚 Select Chapter", chapters)
+    selected_chapter = st.selectbox("Select Chapter", chapters)
     sections = subject_map.get(selected_chapter, [])
     
-    selected_section = st.selectbox("📝 Select Section / Sub-section", sections)
+    selected_section = st.selectbox("Select Section / Sub-section", sections)
     
-    if st.button("👨‍🏫 Explain Selected Section", use_container_width=True):
+    if st.button("Explain Selected Section", use_container_width=True):
         # Extract clean chapter & section titles to bypass search query filler words
         clean_chapter = selected_chapter.split(":")[-1].strip() if ":" in selected_chapter else selected_chapter
         clean_section = selected_section.split(":")[-1].strip() if ":" in selected_section else selected_section
         text_query = f"{clean_chapter} {clean_section}"
         
-        with st.spinner(f"⏳ Querying GuruAI about '{clean_section}'..."):
+        with st.spinner(f"Querying GuruAI about '{clean_section}'..."):
             try:
                 data = {
                     "text_query": text_query,
@@ -295,22 +334,22 @@ with col1:
                 if response.status_code == 200:
                     res_json = response.json()
                     st.session_state["result"] = res_json
-                    st.success("✅ Explanation Loaded!")
+                    st.success("Explanation Loaded!")
                 else:
-                    st.error(f"❌ Server Error: {response.status_code} - {response.text}")
+                    st.error(f"Server Error: {response.status_code} - {response.text}")
             except Exception as e:
-                st.error(f"❌ Backend connection failed: {e}")
+                st.error(f"Backend connection failed: {e}")
 
 
 with col2:
-    st.subheader("💡 GuruAI Interactive Board")
+    st.markdown("<h3 style='display:flex;align-items:center;gap:10px;color:#38bdf8;'><i class='fa-solid fa-chalkboard-user'></i> GuruAI Interactive Board</h3>", unsafe_allow_html=True)
     
     if "result" in st.session_state:
         res = st.session_state["result"]
         blocked = res.get("blocked_flag", False)
         
         if blocked:
-            st.error("🛡️ Guardrail Triggered - Off-Topic Question")
+            st.error("Guardrail Triggered - Off-Topic Question")
             st.markdown(f"**GuruAI Response:**\n{res.get('text_response')}")
             audio_url = res.get("audio_url")
             if audio_url:
@@ -334,13 +373,13 @@ with col2:
             # Visual Summary Image Card
             visual_b64 = res.get("visual_base64")
             if visual_b64:
-                st.image(visual_b64, caption="📊 Concept Summary Card", use_container_width=True)
+                st.image(visual_b64, caption="Concept Summary Card", use_container_width=True)
                 
             # Quiz Card
             quiz_data = res.get("quiz_data")
             if quiz_data and mode_option == "Interactive Quiz":
                 st.markdown('<div class="quiz-card">', unsafe_allow_html=True)
-                st.markdown(f"### ❓ Quick Quiz: {quiz_data.get('question')}")
+                st.markdown(f"<h4 style='display:flex;align-items:center;gap:8px;color:#818cf8;'><i class='fa-solid fa-circle-question'></i> Quick Quiz: {quiz_data.get('question')}</h4>", unsafe_allow_html=True)
                 opts = quiz_data.get("options", {})
                 
                 selected_opt = st.radio(
@@ -352,11 +391,16 @@ with col2:
                 if st.button("Submit Answer"):
                     if selected_opt == quiz_data.get("answer"):
                         st.balloons()
-                        st.success(f"🎉 Sahi Jawab! Option ({selected_opt}) is correct!")
+                        st.success(f"Correct Answer! Option ({selected_opt}) is correct!")
                     else:
-                        st.error(f"❌ Nayi koshish karein! Correct option is ({quiz_data.get('answer')}).")
-                    st.info(f"💡 **Explanation:** {quiz_data.get('explanation')}")
+                        st.error(f"Incorrect answer. Try again! The correct option is ({quiz_data.get('answer')}).")
+                    st.info(f"Explanation: {quiz_data.get('explanation')}")
                 st.markdown('</div>', unsafe_allow_html=True)
     else:
-        st.info("👋 Use the microphone on the left to ask a question, and see/hear GuruAI explain topics live!")
+        st.markdown("""
+        <div style="background:rgba(56, 189, 248, 0.03);color:#94a3b8;padding:32px 24px;border-radius:16px;border:1px dashed rgba(148, 163, 184, 0.15);text-align:center;margin-top:20px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <i class="fa-solid fa-microphone-lines" style="font-size:2rem;color:#38bdf8;margin-bottom:5px;"></i>
+            <span>Use the microphone on the left to ask a question, and see/hear GuruAI explain topics live!</span>
+        </div>
+        """, unsafe_allow_html=True)
 

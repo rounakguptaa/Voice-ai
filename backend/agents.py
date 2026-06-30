@@ -46,22 +46,22 @@ def generate_subject_explanation(query: str, subject: str, chunks: List[Dict[str
         explanation = (
             f" Namaste Vidyarthi! Chaliye **Class 10 Science** ke is mazedar topic ko samajhte hain!\n\n"
             f"** Aapka Sawal:** '{query}'\n\n"
-            f"🔬 **Mukhya Vigyanik Karan (Cause-Effect & Phenomena):**\n"
+            f"**Mukhya Vigyanik Karan (Cause-Effect & Phenomena):**\n"
             f"{clean_context[:450]}...\n\n"
-            f"💡 **Real-World Example (Rozmarra ki Zindagi mein):**\n"
+            f"**Real-World Example (Rozmarra ki Zindagi mein):**\n"
             f"Hum apne aas-paas ke vatavaran mein is kriya (phenomenon) ko dekh sakte hain. "
             f"Jab hum is prakriya ko samajhte hain, toh vigyan hamari rozmarra ki zindagi se jud jata hai!\n\n"
-            f"🎯 **Key Takeaway:** Vigyan mein 'kyun' aur 'kaise' samajhna sabse zaroori hai. Shabaash, padhte rahiye!"
+            f"**Key Takeaway:** Vigyan mein 'kyun' aur 'kaise' samajhna sabse zaroori hai. Shabaash, padhte rahiye!"
         )
     else: # Mathematics
         explanation = (
             f" Namaste Vidyarthi! Chaliye **Class 10 Mathematics** ke is problem ko step-by-step hal karte hain!\n\n"
             f"** Aapka Sawal:** '{query}'\n\n"
-            f"📐 **Step-by-Step Derivation & Formulas (Niyam aur Sutra):**\n"
+            f"**Step-by-Step Derivation & Formulas (Niyam aur Sutra):**\n"
             f"{clean_context[:450]}...\n\n"
-            f"✍️ **Problem Solving Tip:**\n"
+            f"**Problem Solving Tip:**\n"
             f"Ganit mein hamesha given data ko dhyan se likhein, sahi formula apply karein, aur calculation step-by-step karein taaki koi galti na ho!\n\n"
-            f"🎯 **Key Takeaway:** Practice makes perfect! Is formula par 2-3 extra question zaroor solve karein."
+            f"**Key Takeaway:** Practice makes perfect! Is formula par 2-3 extra question zaroor solve karein."
         )
         
     return explanation
