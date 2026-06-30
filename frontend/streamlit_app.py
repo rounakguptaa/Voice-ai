@@ -232,7 +232,6 @@ st.caption("Haryana Government Smart Board System • Class 10 Science & Mathema
 
 # Sidebar Controls
 with st.sidebar:
-    st.image("https://img.icons8.com/isometric/512/teacher.png", width=120)
     st.markdown("<h2 style='display:flex;align-items:center;gap:10px;color:#38bdf8;font-size:1.4rem;margin-top:10px;margin-bottom:20px;'><i class='fa-solid fa-sliders'></i> Settings</h2>", unsafe_allow_html=True)
     
     class_option = st.selectbox("Select Class", ["10"], index=0, help="Currently Class 10 NCERT curriculum is active.")
@@ -243,7 +242,7 @@ with st.sidebar:
     st.markdown(f"""
     <div class="status-badge">
         <i class="fa-solid fa-circle-check"></i>
-        <span>Backend: <code>{BACKEND_URL}</code></span>
+        <span>System Status: Connected</span>
     </div>
     """, unsafe_allow_html=True)
 

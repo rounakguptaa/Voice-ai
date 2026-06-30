@@ -58,6 +58,9 @@ def generate_concept_visual(title: str, explanation_text: str, subject: str = "s
     for l in clean_lines:
         # Strip markdown symbols
         clean_l = l.replace("*", "").replace("#", "").strip()
+        # Skip markdown dividers
+        if clean_l.startswith('==') or clean_l.startswith('--') or clean_l.startswith('__') or clean_l.strip() in ['***', '---', '___']:
+            continue
         if len(clean_l) > 10 and not clean_l.startswith('Namaste') and not clean_l.startswith('Bhai/Beta'):
             summary_bullets.append(clean_l)
         if len(summary_bullets) >= 3:
@@ -117,11 +120,11 @@ def generate_concept_visual(title: str, explanation_text: str, subject: str = "s
             transform=ax.transAxes
         )
         ax.add_patch(r_box)
-        ax.text(0.61, 0.45, "Reactants\n(अभिकारक)", transform=ax.transAxes, color='#ffffff', fontsize=10, fontweight='bold', ha='center', va='center')
+        ax.text(0.61, 0.45, "Reactants", transform=ax.transAxes, color='#ffffff', fontsize=10, fontweight='bold', ha='center', va='center')
         
         # Draw Arrow
         ax.annotate(
-            "Chemical Change\n(रासायनिक बदलाव)",
+            "Chemical Change",
             xy=(0.78, 0.45), xytext=(0.69, 0.45),
             xycoords=ax.transAxes, textcoords=ax.transAxes,
             arrowprops=dict(facecolor='#4da6ff', edgecolor='#4da6ff', width=3, headwidth=8, shrink=0.05),
@@ -136,7 +139,7 @@ def generate_concept_visual(title: str, explanation_text: str, subject: str = "s
             transform=ax.transAxes
         )
         ax.add_patch(p_box)
-        ax.text(0.87, 0.45, "Products\n(उत्पाद)", transform=ax.transAxes, color='#ffffff', fontsize=10, fontweight='bold', ha='center', va='center')
+        ax.text(0.87, 0.45, "Products", transform=ax.transAxes, color='#ffffff', fontsize=10, fontweight='bold', ha='center', va='center')
         
     # 2. Trigonometry Diagram (Right Angled Triangle)
     elif "trig" in title_lower or "triangle" in title_lower or "height" in title_lower or "distance" in title_lower:
@@ -151,18 +154,18 @@ def generate_concept_visual(title: str, explanation_text: str, subject: str = "s
         ax.plot([0.83, 0.83, 0.86], [0.25, 0.28, 0.28], color='#ffffff', linewidth=1, transform=ax.transAxes)
         
         # Labels
-        ax.text(0.72, 0.20, "Base (आधार)", transform=ax.transAxes, color='#e2e8f0', fontsize=9.5, ha='center')
-        ax.text(0.88, 0.45, "Opposite (लंब)", transform=ax.transAxes, color='#e2e8f0', fontsize=9.5, va='center')
-        ax.text(0.68, 0.48, "Hypotenuse\n(कर्ण)", transform=ax.transAxes, color='#ffd700', fontsize=9.5, ha='right', va='bottom')
+        ax.text(0.72, 0.20, "Base", transform=ax.transAxes, color='#e2e8f0', fontsize=9.5, ha='center')
+        ax.text(0.88, 0.45, "Opposite", transform=ax.transAxes, color='#e2e8f0', fontsize=9.5, va='center')
+        ax.text(0.68, 0.48, "Hypotenuse", transform=ax.transAxes, color='#ffd700', fontsize=9.5, ha='right', va='bottom')
         ax.text(0.63, 0.27, "θ", transform=ax.transAxes, color='#ffd700', fontsize=12, fontweight='bold')
         
     # 3. Biology / Process Flowchart
     elif "respir" in title_lower or "life" in title_lower or "process" in title_lower or "nutri" in title_lower or "circulat" in title_lower:
         # Draw process steps vertically
         steps = [
-            "1. Intake (अंतर्ग्रहण)",
-            "2. Breakdown (विखंडन)",
-            "3. Energy (ATP) (ऊर्जा)"
+            "1. Intake",
+            "2. Breakdown",
+            "3. Energy (ATP)"
         ]
         y_flows = [0.58, 0.40, 0.22]
         for step, y_f in zip(steps, y_flows):
@@ -202,20 +205,20 @@ def generate_concept_visual(title: str, explanation_text: str, subject: str = "s
             ax.plot([t, t], [0.43, 0.47], color='#ffffff', linewidth=1.5, transform=ax.transAxes)
             ax.text(t, 0.38, label, transform=ax.transAxes, color='#ffffff', fontsize=10, ha='center')
             
-        ax.text(0.73, 0.54, "Real Number Line\n(वास्तविक संख्या रेखा)", transform=ax.transAxes, color='#ffd700', fontsize=11, fontweight='bold', ha='center')
+        ax.text(0.73, 0.54, "Real Number Line", transform=ax.transAxes, color='#ffd700', fontsize=11, fontweight='bold', ha='center')
 
     # 5. Default Mindmap Concept Box
     else:
         # Draw a beautiful central concept bubble linked to study components
         center = patches.Circle((0.74, 0.44), 0.12, facecolor='#1e293b', edgecolor='#ffd700', linewidth=2, transform=ax.transAxes)
         ax.add_patch(center)
-        ax.text(0.74, 0.44, "CONCEPT\n(अवधारणा)", transform=ax.transAxes, color='#ffd700', fontsize=10, fontweight='bold', ha='center', va='center')
+        ax.text(0.74, 0.44, "Concept", transform=ax.transAxes, color='#ffd700', fontsize=10, fontweight='bold', ha='center', va='center')
         
         # Satellites
         sats = [
-            ("Learn (सीखें)", 0.56, 0.62),
-            ("Practice (अभ्यास)", 0.91, 0.44),
-            ("Recall (याद रखें)", 0.56, 0.26)
+            ("Learn", 0.56, 0.62),
+            ("Practice", 0.91, 0.44),
+            ("Recall", 0.56, 0.26)
         ]
         for name, sx, sy in sats:
             sat_patch = patches.Circle((sx, sy), 0.065, facecolor='#2d3748', edgecolor='#e2e8f0', linewidth=1, transform=ax.transAxes)
