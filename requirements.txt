@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+streamlit
+sentence-transformers
+faiss-cpu
+edge-tts
+gtts
+matplotlib
+requests
+python-multipart
+openai-whisper
+numpy
+groq
+python-dotenv
