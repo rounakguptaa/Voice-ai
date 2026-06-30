@@ -11,14 +11,14 @@ WORKDIR /app
 # Copy requirements
 COPY requirements.txt .
 
+# Install CPU-only PyTorch to reduce image size and RAM usage
+RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
+
 # Install python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Pre-download SentenceTransformer model
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
-
-# Pre-download OpenAI Whisper base model
-RUN python -c "import whisper; whisper.load_model('base')"
 
 # Copy application files
 COPY backend/ ./backend

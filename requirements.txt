@@ -8,7 +8,6 @@ gtts
 matplotlib
 requests
 python-multipart
-openai-whisper
 numpy
 groq
 python-dotenv
